@@ -10,8 +10,8 @@ import MapOne from "../Maps/MapOne";
 import { useAppSelector } from "@/lib/hooks";
 
 const ECommerce: React.FC = () => {
-  const user = useAppSelector((state) => state.user);
-  console.log("user: ", user);
+  // const user = useAppSelector((state) => state.auth.currentUser);
+  // console.log("user: ", user);
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">

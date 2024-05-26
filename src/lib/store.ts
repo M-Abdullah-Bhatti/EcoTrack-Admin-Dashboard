@@ -1,15 +1,28 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import userSlice from "./features/userSlice";
+import storage from "redux-persist/lib/storage";
+import { persistReducer } from "redux-persist";
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
-export const userStore = () => {
-  return configureStore({
-    reducer: {
-      user: userSlice,
-    },
-  });
+// configure which key we want to persist
+const authPersistConfig = {
+  key: "auth",
+  storage: storage,
+  whitelist: ["currentUser"],
 };
 
-export type AppStore = ReturnType<typeof userStore>;
+const rootReducer = combineReducers({
+  auth: persistReducer(authPersistConfig, userSlice),
+});
 
-export type RootState = ReturnType<AppStore["getState"]>;
-export type AppDispatch = AppStore["dispatch"];
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }),
+});
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

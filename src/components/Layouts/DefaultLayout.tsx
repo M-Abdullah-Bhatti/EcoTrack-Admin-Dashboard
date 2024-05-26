@@ -1,14 +1,26 @@
 "use client";
-import React, { useState, ReactNode } from "react";
+import React, { useState, ReactNode, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
+import { useAppSelector } from "@/lib/store";
+import { useRouter } from "next/navigation";
 
 export default function DefaultLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const user = useAppSelector((state) => state.auth.currentUser);
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/auth/signin");
+    }
+  });
+
   return (
     <>
       {/* <!-- ===== Page Wrapper Start ===== --> */}

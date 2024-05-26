@@ -1,16 +1,20 @@
 "use client";
 import axios from "axios";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import baseUrl from "../../utils/baseUrl";
 import Loader from "../common/Loader";
 import RequestLoader from "../RequestLoader";
 import { useDispatch } from "react-redux";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { UserState, loginSuccess } from "@/lib/features/userSlice";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
+
+  const user = useAppSelector((state) => state.auth.currentUser);
   const [loader, setLoader] = useState<Boolean>(false);
   const [data, setData] = useState({
     email: "",
@@ -24,9 +28,6 @@ const Login = () => {
       [name]: value,
     }));
   };
-
-  // const user = useAppSelector((state) => state.user);
-  // console.log("user: ", user);
 
   const RegisterUser = async (e: any) => {
     e.preventDefault();
@@ -69,6 +70,12 @@ const Login = () => {
       setLoader(false);
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      router.push("/");
+    }
+  });
 
   return (
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
