@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import userSlice from "./features/userSlice";
-import usersSlice from "./features/usersSlice"; // Import the users slice
+import usersSlice from "./features/usersSlice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
@@ -20,7 +20,7 @@ const usersPersistConfig = {
 
 const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, userSlice),
-  users: persistReducer(usersPersistConfig, usersSlice), // Add users slice to the rootReducer
+  users: persistReducer(usersPersistConfig, usersSlice),
 });
 
 export const store = configureStore({
@@ -32,5 +32,5 @@ export const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
-export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

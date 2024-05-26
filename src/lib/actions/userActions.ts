@@ -9,6 +9,7 @@ export const deleteUserAsync = (userId: string) => async (dispatch: AppDispatch)
 
     if (response.ok) {
       dispatch(deleteUser(userId));
+      console.log("User Deleted")
     } else {
       console.error('Failed to delete user:', response.statusText);
     }

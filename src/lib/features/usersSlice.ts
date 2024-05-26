@@ -1,5 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import axios from "axios";
+import { AppDispatch, RootState } from "../store"; // Import types
 
 export interface UserInfo {
   _id: string;
@@ -17,6 +18,19 @@ const initialUsersState: UsersState = {
   users: [],
 };
 
+// Create the async thunk for deleting a user
+export const deleteUserAsync = createAsyncThunk<void, string, { dispatch: AppDispatch; state: RootState }>(
+  "users/deleteUser",
+  async (userId, { dispatch }) => {
+    try {
+      await axios.delete(`http://127.0.0.1:5000/api/admin/users/${userId}`);
+      dispatch(deleteUser(userId));
+    } catch (error) {
+      console.error("Failed to delete user: ", error);
+    }
+  }
+);
+
 export const usersSlice = createSlice({
   name: "users",
   initialState: initialUsersState,
@@ -27,6 +41,9 @@ export const usersSlice = createSlice({
     deleteUser: (state, action: PayloadAction<string>) => {
       state.users = state.users.filter(user => user._id !== action.payload);
     },
+  },
+  extraReducers: (builder) => {
+    // Handle any extra reducers if necessary
   },
 });
 
