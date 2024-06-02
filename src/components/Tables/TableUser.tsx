@@ -1,14 +1,19 @@
 "use client";
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../lib/store';
 import { setUsers, deleteUserAsync, UserInfo } from '../../lib/features/usersSlice';
 import axios from 'axios';
+import CustomAlert from '../Alert/Alert';
+import Toast from '../Toast/Toast';
 
 const TableUser = () => {
   const dispatch = useAppDispatch();
   const users = useSelector((state: RootState) => state.users.users);
+  const [showAlert, setShowAlert] = useState(false);
+  const [userToDelete, setUserToDelete] = useState<string | null>(null);
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -23,9 +28,23 @@ const TableUser = () => {
   }, [dispatch]);
 
   const handleDelete = (userId: string) => {
-    if (confirm('Are you sure you want to delete this user?')) {
-      dispatch(deleteUserAsync(userId));
+    setShowAlert(true);
+    setUserToDelete(userId);
+  };
+
+  const confirmDelete = () => {
+    if (userToDelete) {
+      dispatch(deleteUserAsync(userToDelete)).then(() => {
+        setShowToast(true);
+        setUserToDelete(null);
+      });
     }
+    setShowAlert(false);
+  };
+
+  const cancelDelete = () => {
+    setShowAlert(false);
+    setUserToDelete(null);
   };
 
   return (
@@ -85,6 +104,21 @@ const TableUser = () => {
           </div>
         ))}
       </div>
+
+      {showAlert && (
+        <CustomAlert
+          message="Are you sure you want to delete this user?"
+          onConfirm={confirmDelete}
+          onCancel={cancelDelete}
+        />
+      )}
+
+      {showToast && (
+        <Toast
+          message="User deleted successfully!"
+          onClose={() => setShowToast(false)}
+        />
+      )}
     </div>
   );
 };

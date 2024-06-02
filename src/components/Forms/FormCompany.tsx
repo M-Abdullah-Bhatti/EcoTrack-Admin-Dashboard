@@ -1,9 +1,9 @@
 "use client";
 
-
 import React, { useState } from 'react';
 import { useAppDispatch } from '../../lib/store';
 import { registerCompanyAsync } from '../../lib/features/companySlice';
+import Toast from '../Toast/Toast';
 
 const CompanyRegistrationForm: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -12,6 +12,9 @@ const CompanyRegistrationForm: React.FC = () => {
     email: '',
     password: '',
   });
+
+  const [toastMessage, setToastMessage] = useState('');
+  const [showToast, setShowToast] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -24,10 +27,14 @@ const CompanyRegistrationForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await dispatch(registerCompanyAsync(formData));
+      await dispatch(registerCompanyAsync(formData)).unwrap();
+      setToastMessage('Company registered successfully!');
+      setShowToast(true);
       // Reset the form after successful submission
       setFormData({ name: '', email: '', password: '' });
     } catch (error) {
+      setToastMessage('Failed to register company');
+      setShowToast(true);
       console.error('Failed to register company: ', error);
     }
   };
@@ -81,6 +88,12 @@ const CompanyRegistrationForm: React.FC = () => {
           Register Company
         </button>
       </form>
+      {showToast && (
+        <Toast
+          message={toastMessage}
+          onClose={() => setShowToast(false)}
+        />
+      )}
     </div>
   );
 };

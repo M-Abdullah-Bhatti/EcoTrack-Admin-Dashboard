@@ -1,21 +1,26 @@
 "use client";
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../lib/store';
 import { setCompanies, deleteCompanyAsync, CompanyInfo } from '../../lib/features/companySlice';
 import axios from 'axios';
+import CustomAlert from '../Alert/Alert';
+import Toast from '../Toast/Toast';
 
 const TableCompany = () => {
   const dispatch = useAppDispatch();
   const companies = useSelector((state: RootState) => state.companies.companies);
+  const [showAlert, setShowAlert] = useState(false);
+  const [companyToDelete, setCompanyToDelete] = useState<string | null>(null);
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
         const response = await axios.get('http://127.0.0.1:5000/api/company/');
         dispatch(setCompanies(response.data));
-        console.log("Company ", companies)
+        console.log("Company ", companies);
       } catch (error) {
         console.error('Failed to fetch companies:', error);
       }
@@ -24,9 +29,25 @@ const TableCompany = () => {
   }, [dispatch]);
 
   const handleDelete = (companyId: string) => {
-    if (confirm('Are you sure you want to delete this company?')) {
-      dispatch(deleteCompanyAsync(companyId));
+    setShowAlert(true);
+    setCompanyToDelete(companyId);
+  };
+
+  const confirmDelete = () => {
+    if (companyToDelete) {
+      dispatch(deleteCompanyAsync(companyToDelete)).then((action) => {
+        if (action.meta.requestStatus === 'fulfilled') {
+          setShowToast(true);
+        }
+        setCompanyToDelete(null);
+      });
     }
+    setShowAlert(false);
+  };
+
+  const cancelDelete = () => {
+    setShowAlert(false);
+    setCompanyToDelete(null);
   };
 
   return (
@@ -62,16 +83,33 @@ const TableCompany = () => {
             </div>
 
             <div className="flex items-center justify-center p-2.5 xl:p-5">
-              <button
-                className="text-red-600 hover:text-red-800"
-                onClick={() => handleDelete(company._id)}
-              >
-                Delete
-              </button>
+            {company._id && (
+                <button
+                  className="text-red-600 hover:text-red-800"
+                  onClick={() => handleDelete(company._id!)}
+                >
+                  Delete
+                </button>
+              )}
             </div>
           </div>
         ))}
       </div>
+
+      {showAlert && (
+        <CustomAlert
+          message="Are you sure you want to delete this company?"
+          onConfirm={confirmDelete}
+          onCancel={cancelDelete}
+        />
+      )}
+
+      {showToast && (
+        <Toast
+          message="Company deleted successfully!"
+          onClose={() => setShowToast(false)}
+        />
+      )}
     </div>
   );
 };
