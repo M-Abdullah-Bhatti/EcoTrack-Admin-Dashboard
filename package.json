@@ -12,6 +12,7 @@
     "@reduxjs/toolkit": "^2.2.5",
     "apexcharts": "^3.45.2",
     "axios": "^1.7.2",
+    "firebase": "^10.12.2",
     "flatpickr": "^4.6.13",
     "jsvectormap": "^1.5.3",
     "next": "14.1.0",
