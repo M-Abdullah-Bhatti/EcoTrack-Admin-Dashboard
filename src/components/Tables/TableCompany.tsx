@@ -1,16 +1,23 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState, useAppDispatch } from '../../lib/store';
-import { setCompanies, deleteCompanyAsync, CompanyInfo } from '../../lib/features/companySlice';
-import axios from 'axios';
-import CustomAlert from '../Alert/Alert';
-import Toast from '../Toast/Toast';
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../lib/store";
+import {
+  setCompanies,
+  deleteCompanyAsync,
+  CompanyInfo,
+} from "../../lib/features/companySlice";
+import axios from "axios";
+import CustomAlert from "../Alert/Alert";
+import Toast from "../Toast/Toast";
+import baseUrl from "@/utils/baseUrl";
 
 const TableCompany = () => {
   const dispatch = useAppDispatch();
-  const companies = useSelector((state: RootState) => state.companies.companies);
+  const companies = useSelector(
+    (state: RootState) => state.companies.companies,
+  );
   const [showAlert, setShowAlert] = useState(false);
   const [companyToDelete, setCompanyToDelete] = useState<string | null>(null);
   const [showToast, setShowToast] = useState(false);
@@ -18,11 +25,11 @@ const TableCompany = () => {
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:5000/api/company/');
+        const response = await axios.get(`${baseUrl}/api/company/`);
         dispatch(setCompanies(response.data));
         console.log("Company ", companies);
       } catch (error) {
-        console.error('Failed to fetch companies:', error);
+        console.error("Failed to fetch companies:", error);
       }
     };
     fetchCompanies();
@@ -36,7 +43,7 @@ const TableCompany = () => {
   const confirmDelete = () => {
     if (companyToDelete) {
       dispatch(deleteCompanyAsync(companyToDelete)).then((action) => {
-        if (action.meta.requestStatus === 'fulfilled') {
+        if (action.meta.requestStatus === "fulfilled") {
           setShowToast(true);
         }
         setCompanyToDelete(null);
@@ -59,19 +66,25 @@ const TableCompany = () => {
       <div className="flex flex-col">
         <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-3">
           <div className="p-2.5 xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">Name</h5>
+            <h5 className="text-sm font-medium uppercase xsm:text-base">
+              Name
+            </h5>
           </div>
           <div className="p-2.5 text-center xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">Email</h5>
+            <h5 className="text-sm font-medium uppercase xsm:text-base">
+              Email
+            </h5>
           </div>
           <div className="p-2.5 text-center xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">Delete</h5>
+            <h5 className="text-sm font-medium uppercase xsm:text-base">
+              Delete
+            </h5>
           </div>
         </div>
 
         {companies.map((company: CompanyInfo, key: number) => (
           <div
-            className={`grid grid-cols-3 sm:grid-cols-3 ${key === companies.length - 1 ? '' : 'border-b border-stroke dark:border-strokedark'}`}
+            className={`grid grid-cols-3 sm:grid-cols-3 ${key === companies.length - 1 ? "" : "border-b border-stroke dark:border-strokedark"}`}
             key={company._id}
           >
             <div className="flex items-center gap-3 p-2.5 xl:p-5">
@@ -83,7 +96,7 @@ const TableCompany = () => {
             </div>
 
             <div className="flex items-center justify-center p-2.5 xl:p-5">
-            {company._id && (
+              {company._id && (
                 <button
                   className="text-red-600 hover:text-red-800"
                   onClick={() => handleDelete(company._id!)}
