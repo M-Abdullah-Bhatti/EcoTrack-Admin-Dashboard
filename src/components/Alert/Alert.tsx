@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React from "react";
 
 interface CustomAlertProps {
   message: string;
@@ -8,20 +8,24 @@ interface CustomAlertProps {
   onCancel: () => void;
 }
 
-const CustomAlert: React.FC<CustomAlertProps> = ({ message, onConfirm, onCancel }) => {
+const CustomAlert: React.FC<CustomAlertProps> = ({
+  message,
+  onConfirm,
+  onCancel,
+}) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-4 rounded shadow-lg">
+      <div className="rounded bg-white p-4 shadow-lg">
         <p>{message}</p>
         <div className="mt-4 flex justify-end space-x-2">
           <button
-            className="bg-red-500 text-white px-4 py-2 rounded"
+            className="rounded bg-red px-4 py-2 text-white"
             onClick={onCancel}
           >
             Cancel
           </button>
           <button
-            className="bg-green-500 text-white px-4 py-2 rounded"
+            className="rounded bg-green-500 px-4 py-2 text-white"
             onClick={onConfirm}
           >
             Confirm

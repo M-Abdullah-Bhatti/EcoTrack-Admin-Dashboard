@@ -1,12 +1,17 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState, useAppDispatch } from '../../lib/store';
-import { setUsers, deleteUserAsync, UserInfo } from '../../lib/features/usersSlice';
-import axios from 'axios';
-import CustomAlert from '../Alert/Alert';
-import Toast from '../Toast/Toast';
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../lib/store";
+import {
+  setUsers,
+  deleteUserAsync,
+  UserInfo,
+} from "../../lib/features/usersSlice";
+import axios from "axios";
+import CustomAlert from "../Alert/Alert";
+import Toast from "../Toast/Toast";
+import baseUrl from "@/utils/baseUrl";
 
 const TableUser = () => {
   const dispatch = useAppDispatch();
@@ -18,10 +23,10 @@ const TableUser = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:5000/api/users/all');
+        const response = await axios.get(`${baseUrl}/api/users`);
         dispatch(setUsers(response.data));
       } catch (error) {
-        console.error('Failed to fetch users:', error);
+        console.error("Failed to fetch users:", error);
       }
     };
     fetchUsers();
@@ -56,25 +61,35 @@ const TableUser = () => {
       <div className="flex flex-col">
         <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5">
           <div className="p-2.5 xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">Name</h5>
+            <h5 className="text-sm font-medium uppercase xsm:text-base">
+              Name
+            </h5>
           </div>
           <div className="p-2.5 text-center xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">Email</h5>
+            <h5 className="text-sm font-medium uppercase xsm:text-base">
+              Email
+            </h5>
           </div>
           <div className="p-2.5 text-center xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">Role</h5>
+            <h5 className="text-sm font-medium uppercase xsm:text-base">
+              Role
+            </h5>
           </div>
           <div className="hidden p-2.5 text-center sm:block xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">Virtual Coins</h5>
+            <h5 className="text-sm font-medium uppercase xsm:text-base">
+              Virtual Coins
+            </h5>
           </div>
           <div className="hidden p-2.5 text-center sm:block xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">Delete</h5>
+            <h5 className="text-sm font-medium uppercase xsm:text-base">
+              Delete
+            </h5>
           </div>
         </div>
 
         {users.map((user: UserInfo, key: number) => (
           <div
-            className={`grid grid-cols-3 sm:grid-cols-5 ${key === users.length - 1 ? '' : 'border-b border-stroke dark:border-strokedark'}`}
+            className={`grid grid-cols-3 sm:grid-cols-5 ${key === users.length - 1 ? "" : "border-b border-stroke dark:border-strokedark"}`}
             key={user._id}
           >
             <div className="flex items-center gap-3 p-2.5 xl:p-5">
