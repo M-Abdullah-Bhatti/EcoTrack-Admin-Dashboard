@@ -39,8 +39,8 @@ const Login = () => {
         `${baseUrl}/api/users/admin/login`,
         data,
       );
-      console.log("response: ", response.statusText);
-      if (response.statusText == "OK") {
+      console.log("response: ", response);
+      if (response.status == 200) {
         console.log("info: ", response.data);
 
         const userData: UserState = {
@@ -54,6 +54,8 @@ const Login = () => {
         console.log("info: ", userData);
 
         dispatch(loginSuccess(userData));
+        console.log("sure");
+        // router.push("/");
 
         // localStorage.setItem("info", JSON.stringify(response.data.user));
         // toast.success(response?.data?.message);
@@ -75,7 +77,7 @@ const Login = () => {
     if (user) {
       router.push("/");
     }
-  });
+  }, [user]);
 
   return (
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
