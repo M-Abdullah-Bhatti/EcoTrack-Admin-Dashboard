@@ -140,9 +140,10 @@ const AdminLinks = () => {
         {/* <!-- Menu Item Profile --> */}
 
         {/* Companies */}
-
         <SidebarLinkGroup
-          activeCondition={pathname === "/forms" || pathname.includes("forms")}
+          activeCondition={
+            pathname === "/company" || pathname.includes("company")
+          }
         >
           {(handleClick, open) => {
             return (
@@ -150,7 +151,7 @@ const AdminLinks = () => {
                 <Link
                   href="#"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    (pathname === "/forms" || pathname.includes("forms")) &&
+                    (pathname === "/company" || pathname.includes("company")) &&
                     "bg-graydark dark:bg-meta-4"
                   }`}
                   onClick={(e) => {
@@ -243,7 +244,9 @@ const AdminLinks = () => {
 
         {/* Vouchers */}
         <SidebarLinkGroup
-          activeCondition={pathname === "/forms" || pathname.includes("forms")}
+          activeCondition={
+            pathname === "/voucher" || pathname.includes("voucher")
+          }
         >
           {(handleClick, open) => {
             return (
@@ -251,7 +254,7 @@ const AdminLinks = () => {
                 <Link
                   href="#"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    (pathname === "/forms" || pathname.includes("forms")) &&
+                    (pathname === "/voucher" || pathname.includes("voucher")) &&
                     "bg-graydark dark:bg-meta-4"
                   }`}
                   onClick={(e) => {
