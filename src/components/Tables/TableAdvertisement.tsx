@@ -13,6 +13,7 @@ import CustomAlert from "../Alert/Alert";
 import Toast from "../Toast/Toast";
 import baseUrl from "@/utils/baseUrl";
 import { useAppSelector } from "@/lib/hooks";
+import { useRouter } from "next/navigation";
 
 const TableAdvertisement = () => {
   const [refetch, setRefetch] = useState(false);
@@ -21,6 +22,8 @@ const TableAdvertisement = () => {
   const [voucherToDisable, setVoucherToDisable] = useState<string | null>(null);
   const [showToast, setShowToast] = useState(false);
   const user = useAppSelector((state) => state.auth.currentUser);
+
+  const router = useRouter();
 
   useEffect(() => {
     const fetchVouchers = async () => {
@@ -48,6 +51,10 @@ const TableAdvertisement = () => {
   const handleDisable = (voucherId: string) => {
     setShowAlert(true);
     setVoucherToDisable(voucherId);
+  };
+
+  const handleNavigate = (voucherId: string) => {
+    router.push(`/ads/${voucherId}`);
   };
 
   const confirmDisable = async () => {
@@ -110,7 +117,7 @@ const TableAdvertisement = () => {
           </div>
           <div className="hidden p-2.5 text-center sm:block xl:p-5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Delete
+              Actions
             </h5>
           </div>
         </div>
@@ -138,13 +145,21 @@ const TableAdvertisement = () => {
               </a>
             </div>
 
-            <div className="flex items-center justify-center p-2.5 xl:p-5">
+            <div className="flex items-center justify-center gap-3 p-2.5 xl:p-5">
               {item._id && (
                 <button
                   className="text-red-600 hover:text-red-800"
                   onClick={() => handleDisable(item._id!)}
                 >
                   Delete
+                </button>
+              )}
+              {item._id && (
+                <button
+                  className="text-red-600 hover:text-red-800"
+                  onClick={() => handleNavigate(item._id!)}
+                >
+                  View
                 </button>
               )}
             </div>
