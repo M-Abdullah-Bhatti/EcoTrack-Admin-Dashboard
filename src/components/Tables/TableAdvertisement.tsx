@@ -52,9 +52,8 @@ const TableAdvertisement = () => {
 
   const confirmDisable = async () => {
     if (voucherToDisable) {
-      const response = await axios.put(
-        `${baseUrl}/api/voucher/disableVoucher?voucherId=${voucherToDisable}`,
-        { disable: true },
+      const response = await axios.delete(
+        `${baseUrl}/api/posts/${voucherToDisable}`,
         {
           headers: {
             Authorization: `Bearer ${user?.token}`,
@@ -163,7 +162,7 @@ const TableAdvertisement = () => {
 
       {showToast && (
         <Toast
-          message="Voucher Disabled successfully!"
+          message="Advertisement Deleted successfully!"
           onClose={() => setShowToast(false)}
         />
       )}
