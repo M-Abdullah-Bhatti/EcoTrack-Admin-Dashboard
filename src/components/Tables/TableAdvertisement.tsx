@@ -110,7 +110,7 @@ const TableAdvertisement = () => {
           </div>
           <div className="hidden p-2.5 text-center sm:block xl:p-5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Disable
+              Delete
             </h5>
           </div>
         </div>
@@ -144,7 +144,7 @@ const TableAdvertisement = () => {
                   className="text-red-600 hover:text-red-800"
                   onClick={() => handleDisable(item._id!)}
                 >
-                  Disable
+                  Delete
                 </button>
               )}
             </div>
