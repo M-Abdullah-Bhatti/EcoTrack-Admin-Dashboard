@@ -15,7 +15,6 @@ const CompanyDashboard = () => {
   const user = useAppSelector((state) => state.auth.currentUser);
 
   const [data, setData] = useState<any>();
-  const [error, setError] = useState("");
   const [loader, setLoader] = useState<Boolean>(false);
 
   useEffect(() => {
