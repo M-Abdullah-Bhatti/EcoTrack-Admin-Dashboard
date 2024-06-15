@@ -76,7 +76,7 @@ const AvertisementForm: React.FC = () => {
     } catch (error) {
       setLoader(false);
 
-      setToastMessage("Failed to create advertisement");
+      setToastMessage("Please buy credit to post Ad");
       setShowToast(true);
       console.error("Failed to create advertisement: ", error);
     }
