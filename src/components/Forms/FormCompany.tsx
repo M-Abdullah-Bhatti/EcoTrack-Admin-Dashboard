@@ -50,7 +50,7 @@ const CompanyRegistrationForm: React.FC = () => {
       <form onSubmit={handleSubmit} className="p-6.5">
         <div className="mb-4">
           <label className="block text-sm font-medium text-black dark:text-white">
-            Name
+            Username
           </label>
           <input
             type="text"
@@ -64,7 +64,7 @@ const CompanyRegistrationForm: React.FC = () => {
         </div>
         <div className="mb-4">
           <label className="block text-sm font-medium text-black dark:text-white">
-            Name
+            Company Name
           </label>
           <input
             type="text"
