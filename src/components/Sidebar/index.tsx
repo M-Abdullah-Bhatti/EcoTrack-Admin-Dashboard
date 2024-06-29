@@ -71,14 +71,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     >
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-        <Link href="/">
+        <Link
+          href="/"
+          className="flex items-center gap-4 text-xl font-semibold "
+        >
           <Image
-            width={176}
-            height={32}
-            src={"/images/logo/logo-text.png"}
+            width={35}
+            height={35}
+            src={"/images/logo/mainLogo.png"}
             alt="Logo"
             priority
           />
+          <p className="text-white">EcoTrack</p>
         </Link>
 
         <button

@@ -44,6 +44,10 @@ const DropdownUser = () => {
     return () => document.removeEventListener("keydown", keyHandler);
   });
 
+  {
+    console.log("user?.profilePic: ", user?.profilePic);
+  }
+
   return (
     <div className="relative">
       <Link
@@ -58,18 +62,18 @@ const DropdownUser = () => {
           </span>
           <span className="block text-xs">{user?.role} portal</span>
         </span>
-
         <span className="h-12 w-12 rounded-full">
           <Image
             width={112}
             height={112}
             src={
-              user?.profilePic ? user?.profilePic : "/images/user/user-01.png"
+              user?.profilePic ? user.profilePic : "/images/user/user-01.png"
             }
             style={{
               width: "auto",
               height: "auto",
             }}
+            className={user?.profilePic ? "rounded-full" : ""}
             alt="User"
           />
         </span>
