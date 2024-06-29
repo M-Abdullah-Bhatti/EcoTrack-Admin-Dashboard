@@ -94,7 +94,7 @@ const Login = () => {
                 /> */}
               <Image
                 className="dark:hidden"
-                src={"/images/logo/logo-dark.svg"}
+                src={"/images/logo/logo-text.png"}
                 alt="Logo"
                 width={176}
                 height={32}
@@ -102,8 +102,7 @@ const Login = () => {
             </div>
 
             <p className="2xl:px-20">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit
-              suspendisse.
+              EcoTrack - Revolutionizing Carbon Footprint Awareness
             </p>
 
             <span className="mt-15 inline-block">
