@@ -130,7 +130,7 @@ const AvertisementForm: React.FC = () => {
           type="submit"
           className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90"
         >
-          {loader ? <RequestLoader /> : "Create Voucher"}
+          {loader ? <RequestLoader /> : "Create Advertisement"}
         </button>
       </form>
       {showToast && (
